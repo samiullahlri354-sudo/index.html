@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akhuwat University Lahore Kasur</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1a5276;
+            --secondary: #d4ac0d;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --accent: #e74c3c;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            height: 70px;
+            width: auto;
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 0;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 82, 118, 0.85), rgba(26, 82, 118, 0.9)), url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 14px 35px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--dark);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .about-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .about-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        /* CEO Section */
+        .ceo-section {
+            background-color: var(--light);
+        }
+
+        .ceo-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .ceo-image {
+            text-align: center;
+        }
+
+        .ceo-img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .ceo-info h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .ceo-info .title {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .ceo-info p {
+            margin-bottom: 15px;
+        }
+
+        .awards {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .awards h4 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .awards h4 i {
+            color: var(--secondary);
+        }
+
+        .award-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+            padding: 10px;
+            background-color: rgba(212, 172, 13, 0.1);
+            border-radius: 5px;
+        }
+
+        .award-item i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        /* Departments Section */
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .department-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .department-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .department-img {
+            height: 200px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .department-info {
+            padding: 25px;
+        }
+
+        .department-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        /* Admission Form */
+        .admission-form {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .file-upload {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: border 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+        }
+
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .camera-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .camera-btn:hover {
+            background-color: var(--dark);
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .form-buttons .btn {
+            flex: 1;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .success-message i {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .success-message h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .success-message p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .contact-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .contact-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .contact-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .map {
+            height: 400px;
+            background-color: #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Logo Placeholder */
+        .logo-placeholder {
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.1;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .ceo-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .ceo-image {
+                order: 2;
+            }
+            
+            .ceo-info {
+                order: 1;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 90px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 90px);
+                background-color: var(--primary);
+                transition: left 0.3s;
+                z-index: 999;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 30px;
+            }
+
+            nav ul li {
+                margin: 0 0 20px 0;
+            }
+
+            .hero {
+                padding: 80px 0;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .admission-form {
+                padding: 25px;
+            }
+
+            .logo-text h1 {
+                font-size: 1.4rem;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text h1 {
+                font-size: 1.2rem;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+            
+            .btn {
+                padding: 10px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <!-- Logo Placeholder - Replace with actual logo image -->
+                <div class="logo-placeholder">
+                    <span>AKHUWAT</span>
+                    <span>UNIVERSITY</span>
+                </div>
+                <div class="logo-text">
+                    <h1>Akhuwat University</h1>
+                    <p>Lahore Kasur - Free Education for All</p>
+                </div>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#ceo">CEO</a></li>
+                    <li><a href="#departments">Departments</a></li>
+                    <li><a href="#admission">Online Admission</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Welcome to Akhuwat University Lahore Kasur</h2>
+            <p>Providing quality education completely free of cost to empower the youth of Pakistan with knowledge and skills for a brighter future.</p>
+            <a href="#admission" class="btn">Apply Now</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Akhuwat University</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Our Vision</h3>
+                    <p>To create a society based on the principles of compassion, equality, and justice by providing free quality education to all, regardless of their financial background.</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Our Mission</h3>
+                    <p>To eliminate financial barriers to education by offering completely free degree programs, fostering academic excellence, and developing socially responsible leaders.</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Free Education</h3>
+                    <p>At Akhuwat University, we believe that education is a fundamental right. All our programs are offered completely free of cost, including tuition, books, and other academic expenses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CEO Section -->
+    <section id="ceo" class="ceo-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Leadership</h2>
+            </div>
+            <div class="ceo-container">
+                <div class="ceo-image">
+                    <div class="logo-placeholder" style="width: 250px; height: 250px; font-size: 1.2rem; margin: 0 auto;">
+                        <span style="font-size: 1.8rem;">Dr. Amjad Saqib</span>
+                        <span>Founder & CEO</span>
+                        <span>Akhuwat Foundation</span>
+                    </div>
+                </div>
+                <div class="ceo-info">
+                    <h3>Dr. Amjad Saqib</h3>
+                    <p class="title">Founder & CEO, Akhuwat Foundation</p>
+                    <p>Dr. Amjad Saqib is the visionary founder and CEO of Akhuwat Foundation, one of the largest interest-free microfinance organizations in the world. His dedication to eradicating poverty through compassion and empowerment has transformed millions of lives across Pakistan.</p>
+                    <p>Under his leadership, Akhuwat has expanded its mission to include education, healthcare, and social services, with Akhuwat University being a flagship initiative to provide free quality education to deserving students.</p>
+                    <p>Dr. Saqib's innovative approach to social development has earned him international recognition and numerous prestigious awards.</p>
+                    
+                    <div class="awards">
+                        <h4><i class="fas fa-award"></i> Awards & Recognition</h4>
+                        <div class="award-item">
+                            <i class="fas fa-medal"></i>
+                            <div>
+                                <strong>Nobel Peace Prize Nominee</strong>
+                                <p>Recognized for his outstanding contributions to poverty alleviation and social development</p>
+                            </div>
+                        </div>
+                        <div class="award-item">
+                            <i class="fas fa-trophy"></i>
+                            <div>
+                                <strong>Ramon Magsaysay Award</strong>
+                                <p>Often considered Asia's Nobel Prize, awarded for his transformative leadership</p>
+                            </div>
+                        </div>
+                        <div class="award-item">
+                            <i class="fas fa-star"></i>
+                            <div>
+                                <strong>World Economic Forum Recognition</strong>
+                                <p>Recognized as a Global Social Entrepreneur for his innovative poverty solutions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section id="departments">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Departments</h2>
+            </div>
+            <div class="departments-grid">
+                <div class="department-card">
+                    <div class="department-img">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="department-info">
+                        <h3>BS Information Technology</h3>
+                        <p>Comprehensive IT education covering programming, networking, database management, and software development to prepare students for the digital economy.</p>
+                    </div>
+                </div>
+                <div class="department-card">
+                    <div class="department-img">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="department-info">
+                        <h3>BS Economics</h3>
+                        <p>Study of economic theories, policies, and practices to understand and address contemporary economic challenges at local and global levels.</p>
+                    </div>
+                </div>
+                <div class="department-card">
+                    <div class="department-img">
+                        <i class="fas fa-business-time"></i>
+                    </div>
+                    <div class="department-info">
+                        <h3>BBA - Business Administration</h3>
+                        <p>Develop business acumen and leadership skills through courses in management, marketing, finance, and entrepreneurship.</p>
+                    </div>
+                </div>
+                <div class="department-card">
+                    <div class="department-img">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <div class="department-info">
+                        <h3>BS Hospitality & Tourism</h3>
+                        <p>Prepare for careers in the growing hospitality and tourism industry with courses in hotel management, tourism planning, and customer service.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission Section -->
+    <section id="admission">
+        <div class="container">
+            <div class="section-title">
+                <h2>Online Admission</h2>
+            </div>
+            
+            <!-- Admission Form -->
+            <form class="admission-form" id="admissionForm">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cnic">CNIC Number</label>
+                    <input type="text" id="cnic" class="form-control" placeholder="XXXXX-XXXXXXX-X" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Residential Address</label>
+                    <textarea id="address" class="form-control" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="department">Select Department</label>
+                    <select id="department" class="form-control" required>
+                        <option value="">Choose a department</option>
+                        <option value="bsit">BS Information Technology</option>
+                        <option value="bseconomics">BS Economics</option>
+                        <option value="bba">BBA - Business Administration</option>
+                        <option value="bsht">BS Hospitality & Tourism</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Upload Documents</label>
+                    <div class="file-upload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to upload or drag and drop</p>
+                        <p>PDF, JPG, PNG (Max. 10MB)</p>
+                        <input type="file" id="documents" hidden multiple>
+                        <label for="documents" class="camera-btn">
+                            <i class="fas fa-camera"></i> Use Camera
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn">Submit Application</button>
+                    <button type="button" class="btn btn-secondary" id="previewBtn">Preview Form</button>
+                </div>
+            </form>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <h3>Application Submitted Successfully!</h3>
+                <p>Thank you for applying to Akhuwat University. Your application has been received and is under review.</p>
+                <p>You can download a copy of your application form for your records.</p>
+                <button class="btn" id="downloadPdfBtn">Download Application PDF</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+            </div>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <i class="fas fa-phone-alt"></i>
+                    <h3>Phone</h3>
+                    <p>0319-6841698</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email</h3>
+                    <p>samiullahlri354@gmail.com</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Address</h3>
+                    <p>Akhuwat University, Lahore Kasur Road, Kasur, Pakistan</p>
+                </div>
+            </div>
+            <div class="map">
+                <!-- In a real implementation, you would embed a Google Map here -->
+                <div style="width: 100%; height: 100%; background-color: #1a5276; display: flex; align-items: center; justify-content: center; color: white;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>University Location Map</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Akhuwat University</h3>
+                    <p>Providing free quality education to empower the youth of Pakistan and create a more equitable society.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#ceo">CEO</a></li>
+                        <li><a href="#departments">Departments</a></li>
+                        <li><a href="#admission">Admission</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Departments</h3>
+                    <ul>
+                        <li><a href="#">BS Information Technology</a></li>
+                        <li><a href="#">BS Economics</a></li>
+                        <li><a href="#">BBA - Business Administration</a></li>
+                        <li><a href="#">BS Hospitality & Tourism</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Akhuwat University Lahore Kasur. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('nav').classList.remove('active');
+            });
+        });
+
+        // File upload functionality
+        const fileUpload = document.querySelector('.file-upload');
+        const fileInput = document.getElementById('documents');
+        
+        fileUpload.addEventListener('click', function() {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                fileUpload.innerHTML = `<i class="fas fa-check-circle"></i><p>${this.files.length} file(s) selected</p>`;
+            }
+        });
+
+        // Camera functionality (simulated)
+        document.querySelector('.camera-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert('Camera functionality would be implemented here in a live environment');
+        });
+
+        // Form submission
+        document.getElementById('admissionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            document.getElementById('admissionForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Preview button
+        document.getElementById('previewBtn').addEventListener('click', function() {
+            alert('This would show a preview of your application in a real implementation');
+        });
+
+        // Download PDF functionality
+        document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+            // Get form values
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const cnic = document.getElementById('cnic').value;
+            const address = document.getElementById('address').value;
+            const department = document.getElementById('department').options[document.getElementById('department').selectedIndex].text;
+            
+            // Create PDF content
+            const pdfContent = `
+                <div style="font-family: Arial, sans-serif; padding: 20px;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #1a5276; margin-bottom: 5px;">Akhuwat University</h1>
+                        <h2 style="color: #d4ac0d; margin-top: 0;">Admission Application</h2>
+                    </div>
+                    
+                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin-bottom: 20px;">
+                        <h3 style="color: #1a5276; margin-top: 0;">Application Summary</h3>
+                        <p><strong>Application Date:</strong> ${new Date().toLocaleDateString()}</p>
+                        <p><strong>Application ID:</strong> AU-${Math.floor(100000 + Math.random() * 900000)}</p>
+                    </div>
+                    
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd; width: 30%;"><strong>Full Name:</strong></td>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${fullname}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Email Address:</strong></td>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${email}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Phone Number:</strong></td>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${phone}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>CNIC Number:</strong></td>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${cnic}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Residential Address:</strong></td>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${address}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Selected Department:</strong></td>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${department}</td>
+                        </tr>
+                    </table>
+                    
+                    <div style="margin-top: 30px; padding: 15px; background-color: #e8f4fd; border-radius: 5px;">
+                        <p><strong>Note:</strong> This is a computer-generated application form. Please keep this copy for your records.</p>
+                        <p>Your application will be reviewed by the admissions committee, and you will be contacted within 7-10 working days.</p>
+                    </div>
+                    
+                    <div style="margin-top: 40px; text-align: center; color: #666; font-size: 12px;">
+                        <p>Akhuwat University - Lahore Kasur Road, Kasur, Pakistan</p>
+                        <p>Phone: 0319-6841698 | Email: samiullahlri354@gmail.com</p>
+                    </div>
+                </div>
+            `;
+            
+            // Create a temporary element to hold the PDF content
+            const tempElement = document.createElement('div');
+            tempElement.innerHTML = pdfContent;
+            document.body.appendChild(tempElement);
+            
+            // Use html2canvas and jsPDF to generate PDF
+            html2canvas(tempElement, {
+                scale: 2,
+                useCORS: true
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+                
+                let position = 0;
+                
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+                
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                
+                // Save the PDF
+                pdf.save(`Akhuwat_University_Application_${fullname.replace(/\s+/g, '_')}.pdf`);
+                
+                // Remove temporary element
+                document.body.removeChild(tempElement);
+            });
+        });
+    </script>
+</body>
+</html>
